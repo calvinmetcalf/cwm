@@ -1,9 +1,11 @@
 {
-    "name": "application-name"
+    "name": "cwm"
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
       "express": "2.5.5"
-    , "jade": ">= 0.0.1"
+    , "jade": ">= 0.20.x"
+    , "tilelive": "4.1.x"
+    , "coffee-script": "1.2.x"
   }
 }
