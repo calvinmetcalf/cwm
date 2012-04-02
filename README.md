@@ -1,3 +1,1 @@
-at the moment, just a generic express app
-
-but not for long
+some sort of leaflet based app I think
