@@ -1,4 +1,4 @@
-var L = this.L;
+
 var m = new L.Map('map');
 var MarkerOptions = {
     radius: 6,
