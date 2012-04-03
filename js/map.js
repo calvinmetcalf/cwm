@@ -1,12 +1,12 @@
 var L = this.L;
 var m = new L.Map('map');
 var MarkerOptions = {
-    radius: 8,
+    radius: 6,
     fillColor: "#ff7800",
     color: "#000",
     weight: 1,
     opacity: 1,
-    fillOpacity: 0.8
+    fillOpacity: 1
 };
 var WT = new L.GeoJSON(null, {
     pointToLayer: function (latlng) {
