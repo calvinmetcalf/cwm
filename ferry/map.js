@@ -9,7 +9,7 @@ mQ = new L.TileLayer(mapQuestURL, {attribution: attribution, subdomains: ['1','2
 
 FR.on("featureparse", function (e) {
   
-       e.layer.bindPopup("Type: " + e.properties.TYPE + "<br />  Operator: " + e.properties.OPERATOR + "<br /> Route: " + e.properties.ROUTE);
+       e.layer.bindPopup("Type: " + e.properties.TYPE + "<br />Operator: " + e.properties.OPERATOR + "<br />Route: " + e.properties.ROUTE + "<br />Route Number: " + e.properties.RTE_NUM + "<br />Service: " + e.properties.SERVICE);
     
 });
 
