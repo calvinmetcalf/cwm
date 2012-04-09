@@ -1,10 +1,10 @@
 
 var m = new L.Map('map');
 var MarkerOptions = {
-    radius: 6,
+    radius: 3,
     fillColor: "#ff7800",
     color: "#000",
-    weight: 1,
+    weight: 0.5,
     opacity: 1,
     fillOpacity: 1
 };
