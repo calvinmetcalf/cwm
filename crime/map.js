@@ -1,9 +1,10 @@
-var m,mC;
+var m;
+ var a = [];
 var zoom = 12;
 var center = new google.maps.LatLng(42.33,-71.067467);
 var eURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/fs_EatingDrinking.xml';
-var oURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/ft_EatingDrinkingTakeOut.xml';
-var mC;
+var oURL = 'BPDCrime.xml';
+//var mC;
 
 var bosFT = new LCC({
 semi_major: 6378137,
@@ -17,41 +18,42 @@ false_northing: 2460625,
 unit: 0.3048006096012192
 });
 
- var yqlurl = 'http://query.yahooapis.com/v1/public/yql?format=json&q=select%20*%20from%20xml%20where%20url%3D';
+
 $(function() {
    m = new google.maps.Map(document.getElementById('map'), {
       center: center,
       zoom: zoom,
       mapTypeId: 'roadmap'
     });
-    mC = new MarkerClusterer(m,[]);
 getStuff(oURL);
-getStuff(eURL);
+
 
 }
 );
 
 var doStuff =  function(data){
-    var d  = data.query.results.BUSINESSES.BUSINESS;
-   var a = [];
- 
-      $.each(d,function(i,p){
-       var xy =[p.GPSX,p.GPSY];  
-        var latlng = bosFT.inverse(xy);
-        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0])});
-        a.push(marker);
-      }
-          );
-         mC.addMarkers(a);
+    var d = $(data).find('INCIDENT').each(function(i){
+          var x = parseFloat($(this).find('X').text());
+          var y = parseFloat($(this).find('Y').text());
+          
+      
+        var latlng = bosFT.inverse([x,y]);
+        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),map:m});
+      
+      
+       // a.push(marker);
+    });
+          
+        // mC.addMarkers(a);
 };
 
 
 var getStuff = function(url){
- $.get(yqlurl + "'" + encodeURIComponent(url) + "'",
+ $.get(url,
 function(data){
     
     doStuff(data);
-},"jsonp");   
+}, 'XML');   
 }
 function LCC(params){
     /*
@@ -62,7 +64,7 @@ function LCC(params){
 
                                                 params=params||{};
 
-                                        		this.name=params.name||"LCC";
+                                            	this.name=params.name||"LCC";
 
                                         		var _a = (params.semi_major ||6378137.0 )/(params.unit||0.3048006096012192);
 
