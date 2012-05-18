@@ -4,6 +4,10 @@ var zoom = 12;
 var center = new google.maps.LatLng(42.33,-71.067467);
 var eURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/fs_EatingDrinking.xml';
 var oURL = 'BPDCrime.xml';
+var infowindow = new google.maps.InfoWindow();
+var redIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|FF0000|000000|FF0000";
+var blueIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|0000FF|000000|FF0000";
+var greenIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|00FF00|000000|FF0000";
 //var mC;
 
 var bosFT = new LCC({
@@ -25,6 +29,7 @@ $(function() {
       zoom: zoom,
       mapTypeId: 'roadmap'
     });
+c = new MarkerClusterer(m);
 getStuff(oURL);
 
 
@@ -36,16 +41,27 @@ var doStuff =  function(data){
           var x = parseFloat($(this).find('X').text());
           var y = parseFloat($(this).find('Y').text());
           var ccd = $(this).find('CRIMECODE_DESC').text();
+         var fccd = $(this).find('FINALCRIMECODEDESC').text(); 
+          var stb = $(this).find('STREETNAME').text(); 
+          var dom = $(this).find('DOMESTIC').text;
+        
+          var content;
           
       
         var latlng = bosFT.inverse([x,y]);
-        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),title:ccd,map:m});
+        content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb;
+        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),title:fccd});
+         google.maps.event.addListener(marker, 'click',
+                			function()
+							{
+                                infowindow.setContent(content);
+                              infowindow.open(m,marker);
+							});
       
-      
-       // a.push(marker);
+       a.push(marker);
     });
           
-        // mC.addMarkers(a);
+        c.addMarkers(a);
 };
 
 
