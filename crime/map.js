@@ -35,10 +35,11 @@ var doStuff =  function(data){
     var d = $(data).find('INCIDENT').each(function(i){
           var x = parseFloat($(this).find('X').text());
           var y = parseFloat($(this).find('Y').text());
+          var ccd = $(this).find('CRIMECODE_DESC').text();
           
       
         var latlng = bosFT.inverse([x,y]);
-        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),map:m});
+        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),title:ccd,map:m});
       
       
        // a.push(marker);
