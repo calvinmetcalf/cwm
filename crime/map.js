@@ -26,45 +26,78 @@ unit: 0.3048006096012192
 
 
 $(function() {
+    $( "#tabs" ).tabs({
+            collapsible: true,
+            selected: -1
+		});
+        $( ".datepicker" ).datepicker();
+         $('input, textarea').placeholder();
   m = new g.Map(document.getElementById('map'), {
       center: center,
       zoom: zoom,
       mapTypeId: 'roadmap'
     });
-c = new MarkerClusterer(m);
+//c = new MarkerClusterer(m);
 getStuff(oURL);
-
+ $('.datepicker').change(function(){
+     var now = new Date();
+ var datef = $('#from').val().split("/");
+  var datet = $('#to').val().split("/");
+  if (datef.length==1){
+   datef = ["01","01","1900"];
+  }
+   if (datet.length==1){
+   datet = [now.getMonth()+1,now.getDate(),now.getFullYear()];
+  }
+ var from = new Date(parseInt(datef[2]),parseInt(datef[0])-1,parseInt(datef[1]));
+  var to = new Date(parseInt(datet[2]),parseInt(datet[0])-1,parseInt(datet[1]));
+ $.each(d,function(i,s){
+     if((s.dd<from)||(s.dd>to)){
+      s.marker.setMap(null);   
+     }
+     if((s.dd>from)&&(s.dd<to)){
+      s.marker.setMap(m);   
+     }
+ });
+});
 
 }
 );
 
 var doStuff =  function(data){
-     d = data.INCIDENT;
-    $.each(d,function(i){
-          var x = this.X;
-          var y = this.Y;
-          var ccd = this.CRIMECODE_DESC;
-         var fccd = this.FINALCRIMECODEDESC; 
-          var stb = this.STREETNAME; 
-          var dom = this.DOMESTIC;
+    d = data.INCIDENT;
+    $.each(d,function(i,s){
+          var x = s.X;
+          var y = s.Y;
+          var ccd = s.CRIMECODE_DESC;
+         var fccd = s.FINALCRIMECODEDESC; 
+          var stb = s.STREETNAME; 
+          var time = s.FROMDATE;
+          var ta = s.FROMDATE.split("-");
+          var tb = ta[2].split('T');
+          var tc = tb[1].split(":");
         
-          var content;
+           s.dd = new Date(parseInt(ta[0]), parseInt(ta[1])-1,parseInt(tb[0]),parseInt(tc[0]),parseInt(tc[1]),parseInt(tc[2]));
+        var icon  = new g.MarkerImage("http://calvinmetcalf.github.com/oa/img/smallgreen.png");
+          
           
       
         var latlng = bosFT.inverse([x,y]);
-        content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb;
-        var  marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd});
-         g.event.addListener(marker, 'click',
+       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + time;
+          s.marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd,icon:icon});
+        //   s.marker = new g.Mathisrker({position: new g.LatLng(lat,lng),title:permit,icon:icon});
+         s.marker.setMap(m)
+        g.event.addListener(s.marker, 'click',
                 			function()
 							{
                                 infowindow.setContent(content);
-                              infowindow.open(m,marker);
+                              infowindow.open(m,s.marker);
 							});
-      
-       a.push(marker);
+     
+      // a.push(marker);
     });
           
-        c.addMarkers(a);
+      //  c.addMarkers(a);
 };
 
 
@@ -75,6 +108,8 @@ function(data){
     doStuff(data);
 }, 'JSONP');   
 }
+
+
 function LCC(params){
     /*
     based off http://gmaps-utility-gis.googlecode.com/svn/trunk/v3samples/customprojection.html
