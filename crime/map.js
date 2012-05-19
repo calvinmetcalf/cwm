@@ -1,13 +1,15 @@
-var m;
+var m,d;
+var g = google.maps;
  var a = [];
 var zoom = 12;
-var center = new google.maps.LatLng(42.33,-71.067467);
+var center = new g.LatLng(42.33,-71.067467);
 var eURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/fs_EatingDrinking.xml';
-var oURL = 'BPDCrime.xml';
-var infowindow = new google.maps.InfoWindow();
+var oURL = 'http://xdr-calvinmetcalf.rhcloud.com/crime';
+var infowindow = new g.InfoWindow();
 var redIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|FF0000|000000|FF0000";
 var blueIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|0000FF|000000|FF0000";
 var greenIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|00FF00|000000|FF0000";
+
 //var mC;
 
 var bosFT = new LCC({
@@ -24,7 +26,7 @@ unit: 0.3048006096012192
 
 
 $(function() {
-   m = new google.maps.Map(document.getElementById('map'), {
+  m = new g.Map(document.getElementById('map'), {
       center: center,
       zoom: zoom,
       mapTypeId: 'roadmap'
@@ -37,21 +39,22 @@ getStuff(oURL);
 );
 
 var doStuff =  function(data){
-    var d = $(data).find('INCIDENT').each(function(i){
-          var x = parseFloat($(this).find('X').text());
-          var y = parseFloat($(this).find('Y').text());
-          var ccd = $(this).find('CRIMECODE_DESC').text();
-         var fccd = $(this).find('FINALCRIMECODEDESC').text(); 
-          var stb = $(this).find('STREETNAME').text(); 
-          var dom = $(this).find('DOMESTIC').text;
+     d = data.INCIDENT;
+    $.each(d,function(i){
+          var x = this.X;
+          var y = this.Y;
+          var ccd = this.CRIMECODE_DESC;
+         var fccd = this.FINALCRIMECODEDESC; 
+          var stb = this.STREETNAME; 
+          var dom = this.DOMESTIC;
         
           var content;
           
       
         var latlng = bosFT.inverse([x,y]);
         content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb;
-        var  marker = new google.maps.Marker({position: new google.maps.LatLng(latlng[1],latlng[0]),title:fccd});
-         google.maps.event.addListener(marker, 'click',
+        var  marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd});
+         g.event.addListener(marker, 'click',
                 			function()
 							{
                                 infowindow.setContent(content);
@@ -70,7 +73,7 @@ var getStuff = function(url){
 function(data){
     
     doStuff(data);
-}, 'XML');   
+}, 'JSONP');   
 }
 function LCC(params){
     /*
