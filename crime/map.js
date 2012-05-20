@@ -3,6 +3,7 @@ var g = google.maps;
  var a = [];
 var zoom = 12;
 var center = new g.LatLng(42.33,-71.067467);
+var geocoder = new g.Geocoder();
 var eURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/fs_EatingDrinking.xml';
 var oURL = 'http://xdr-calvinmetcalf.rhcloud.com/crime';
 var infowindow = new g.InfoWindow();
@@ -61,6 +62,27 @@ getStuff(oURL);
  });
 });
 
+$('#geocode').click(function(){
+    geocoder.geocode( { 'address': $("#address").val()}, function(results, status) {
+      if (status == g.GeocoderStatus.OK) {
+        m.setCenter(results[0].geometry.location);
+        m.setZoom(14);
+     geocoder.marker = new g.Marker({
+            map: m, 
+            position: results[0].geometry.location
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+}
+);
+
+$('#resetgeo').click(function(){
+      m.setCenter(center);
+    m.setZoom(zoom);
+geocoder.marker.setMap(null);
+});
 }
 );
 
@@ -108,7 +130,6 @@ function(data){
     doStuff(data);
 }, 'JSONP');   
 }
-
 
 function LCC(params){
     /*

@@ -13,8 +13,13 @@
 <script src="mcp.js"></script>
 <script src="map.js"></script>
 </head><body> <div id="tabs">
-    <ul>
-    <li><a href="#tabs-1">Time</a></li></ul>    <div id="tabs-1"><p><input id='from' class="datepicker" type="text" placeholder="the begining">to<input id='to' class="datepicker" type="text" placeholder="now"></p> </div>
+    <ul> <li><a href="#tabs-1">Search</a></li>
+    <li><a href="#tabs-2">Time</a></li></ul> <div id="tabs-1">
+    	 <input type="text" id="address" style="width:16em;" placeholder="Enter an Address or LatLong" />
+  <input type="submit" value="Search"  id='geocode'/>
+  <input type="reset" value="Reset" id='resetgeo'/>
+
+        </div>   <div id="tabs-2"><p><input id='from' class="datepicker" type="text" placeholder="the begining">to<input id='to' class="datepicker" type="text" placeholder="now"></p> </div>
             </div><div id="map"></div><script type="text/javascript">
 
   var _gaq = _gaq || [];
