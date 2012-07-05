@@ -1,17 +1,13 @@
 var m,d;
 var g = google.maps;
- var a = [];
 var zoom = 12;
 var center = new g.LatLng(42.33,-71.067467);
 var geocoder = new g.Geocoder();
-var eURL = 'http://hubmaps.cityofboston.gov/open_gov/XML/fs_EatingDrinking.xml';
-var oURL = 'http://xdr-calvinmetcalf.rhcloud.com/crime';
+geocoder.marker = new g.Marker();
+var oURL = 'http://xdr-cwm.rhcloud.com/crime';
 var infowindow = new g.InfoWindow();
-var redIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|FF0000|000000|FF0000";
-var blueIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|0000FF|000000|FF0000";
-var greenIcon = "https://chart.googleapis.com/chart?chst=d_map_xpin_letter_withshadow&chld=pin|+|00FF00|000000|FF0000";
 
-//var mC;
+
 
 var bosFT = new LCC({
 semi_major: 6378137,
@@ -36,9 +32,17 @@ $(function() {
   m = new g.Map(document.getElementById('map'), {
       center: center,
       zoom: zoom,
-      mapTypeId: 'roadmap'
+      mapTypeId: 'roadmap',
+       mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: g.MapTypeControlStyle.DROPDOWN_MENU
+    },
+    overviewMapControl: true,
+    overviewMapControlOptions: {
+     opened: true   
+    }
     });
-//c = new MarkerClusterer(m);
+    $('div[title="Change map style"]').addClass('five');
 getStuff(oURL);
  $('.datepicker').change(function(){
      var now = new Date();
@@ -67,10 +71,10 @@ $('#geocode').click(function(){
       if (status == g.GeocoderStatus.OK) {
         m.setCenter(results[0].geometry.location);
         m.setZoom(14);
-     geocoder.marker = new g.Marker({
-            map: m, 
-            position: results[0].geometry.location
-        });
+         geocoder.marker.setPosition(results[0].geometry.location);
+   geocoder.marker.setMap(m);
+           
+     
       } else {
         alert("Geocode was not successful for the following reason: " + status);
       }
@@ -105,7 +109,7 @@ var doStuff =  function(data){
           
       
         var latlng = bosFT.inverse([x,y]);
-       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + time;
+       var content = 'Crime Type: ' + ccd + '<br/>Final Crime Type: ' + fccd + '<br/>Location ' + stb + '<br/>When: ' + s.dd + '<br/>Orig time: ' + time;
           s.marker = new g.Marker({position: new g.LatLng(latlng[1],latlng[0]),title:fccd,icon:icon});
         //   s.marker = new g.Mathisrker({position: new g.LatLng(lat,lng),title:permit,icon:icon});
          s.marker.setMap(m)

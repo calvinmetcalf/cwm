@@ -13,10 +13,11 @@ var PT = new L.GeoJSON(null, {
         return new L.CircleMarker(latlng, MarkerOptions);
     }
 });
-
-var mapQuestURL = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
-attribution = 'Tiles courtesy MapQuest',
-mQ = new L.TileLayer(mapQuestURL, {attribution: attribution, subdomains: ['1','2','3','4']});
+var pastel = 'http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg'
+//var stamintarain = 'http://{s}.tile.stamen.com/terrain-background/{z}/{x}/{y}.jpg',
+//var mapQuestURL = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+attribution = 'Tiles courtesy stamen',
+mQ = new L.TileLayer(pastel, {attribution: attribution, subdomains: ['a','b','c','d']});
 
 
 PT.on("featureparse", function (e) {
@@ -28,4 +29,4 @@ PT.on("featureparse", function (e) {
 
 PT.addGeoJSON(outFall);
 
-m.setView(new L.LatLng(41.914541,-71.592407), 8).addLayer(mQ).addLayer(PT);
+m.setView(new L.LatLng(41.914541,-71.592407), 8).addLayer(mQ)
