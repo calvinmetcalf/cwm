@@ -3,7 +3,7 @@ var zoom = 8;
 
 
 //create the tiles    
-var tiles = new L.TileLayer("http://calvin.cloudant.com/block/_design/genghis/_show/tiles/%2F{z}%2F{x}%2F{y}");
+var tiles = new L.TileLayer("http://calvin.cloudant.com/block/_design/genghis/_show/tiles/%2F{z}%2F{x}%2F{y}",{minZoom:4,maxZoom:14});
 //create the map
 var m = new L.Map('map',{
     center:center,
