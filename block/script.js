@@ -1,9 +1,18 @@
 var center = new L.LatLng(42.3584308,-71.0597732);
 var zoom = 8;
+L.FuncLayer = L.TileLayer.extend({getTileUrl: function (tilePoint) {
+        this._adjustTilePoint(tilePoint);
 
+		return this._url(L.Util.extend({
+			s: this._getSubdomain(tilePoint),
+			z: this._getZoomForUrl(),
+			x: tilePoint.x,
+			y: tilePoint.y
+		}, this.options));
+	}});
 
 //create the tiles    
-var tiles = new L.TileLayer("http://calvin.cloudant.com/block/_design/genghis/_show/tiles/%2F{z}%2F{x}%2F{y}",{minZoom:4,maxZoom:14});
+var tiles =  new L.FuncLayer(gtu,{minZoom:4,maxZoom:14});
 //create the map
 var m = new L.Map('map',{
     center:center,
@@ -29,4 +38,8 @@ r.push(tab[bx[i]][by[i]]);
 i++;
 }
 return r.join('');
+}
+function gtu(params){
+ var url = "http://calvin.cloudant.com/pop/_design/genghis/_show/tiles/"
+ return url+quad(params.z,params.x,params.y)
 }
