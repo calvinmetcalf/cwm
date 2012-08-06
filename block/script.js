@@ -17,8 +17,7 @@ var tiles =  new L.FuncLayer(gtu,{minZoom:4,maxZoom:14});
 var m = new L.Map('map',{
     center:center,
     zoom:zoom,
-    layers:[tiles],
-    maxBounds:[[39.6311,-75.9155],[44.473,-68.4119]]
+    layers:[tiles]
     });
 function quad(z,x,y){
 var bx = x.toString(2);
