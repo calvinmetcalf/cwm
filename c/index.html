@@ -1,0 +1,25 @@
+<html><head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+<script type="text/javascript" src="script.js"></script>
+
+</head>
+  <body>
+    <form action="http://closure-compiler.appspot.com/compile" method="POST" id="cc">
+    <p>Type JavaScript code to optimize here:</p>
+    <textarea name="cs_code" cols="100" rows="50">
+hello = (name) ->
+  
+  # Greets the user
+  alert "Hello, " + name
+hello "New user"
+    </textarea>
+    <input type="hidden" name="code_url" value="http://calvinmetcalf.github.com/leaflet-hash/leaflet-hash.js">
+    <input type="hidden" name="compilation_level" value="SIMPLE_OPTIMIZATIONS">
+    <input type="hidden" name="output_format" value="text">
+    <input type="hidden" name="output_info" value="compiled_code">
+    <br><br>
+    <input type="submit" value="Optimize">
+    </form>
+  </body>
+</html>
