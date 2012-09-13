@@ -12,18 +12,21 @@ baseLayers =
     "OpenStreetMap German Style": new L.TileLayer.OpenStreetMap.DE
     "MapQuest OSM": defaultLayer
 
-
-m.addControl L.control.layers(baseLayers)
-
 markers = new L.MarkerClusterGroup()
+
+m.addLayer markers
+
+overlays =
+    "Outdoor Advertising": markers
+
+m.addControl L.control.layers(baseLayers, overlays)
+
+
 
 cb=(d)->
         $.each d.features, (i,v)->
             marker =new L.Marker [v.geometry.coordinates[1],v.geometry.coordinates[0]],{title:v.properties.Name}
             marker.bindPopup v.properties.Description
             markers.addLayer marker
-        m.addLayer markers 
-    
-    
-    
+
 $.get("oa.json",cb)
