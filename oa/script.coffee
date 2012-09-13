@@ -18,7 +18,7 @@ m.addControl(L.control.layers(baseLayers,{collapsed: false}));
 markers = new L.MarkerClusterGroup()
 
 cb=(d)->
-        d.features.forEach (v)->
+        $.each d.features, (i,v)->
             marker =new L.Marker [v.geometry.coordinates[1],v.geometry.coordinates[0]],{title:v.properties.Name}
             marker.bindPopup v.properties.Description
             markers.addLayer marker
