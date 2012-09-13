@@ -26,4 +26,4 @@ cb=(d)->
     
     
     
-$.get("http://oa-otp.rhcloud.com/oag.jsonp",cb,"JSONP")
+$.get("oa.json",cb)
