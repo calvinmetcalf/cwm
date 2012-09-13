@@ -13,7 +13,7 @@ baseLayers =
     "MapQuest OSM": defaultLayer
 
 
-m.addControl(L.control.layers(baseLayers,{collapsed: false}));
+m.addControl L.control.layers(baseLayers)
 
 markers = new L.MarkerClusterGroup()
 
