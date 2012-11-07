@@ -50,14 +50,14 @@ function spopUp(f,l){
     }
 }
 function sstyle(feature) {
-    var opt={stroke:false}
+    var opt={weight:1,color:"#000000"}
         switch (feature.properties.Party) {
             case 'R':  opt.fillColor = "#ff0000";return opt;
             case 'D':    opt.fillColor = "#0000ff";return opt;
         }
     }
 function hstyle(feature) {
-    var opt={stroke:false}
+    var opt={weight:1,color:"#000000"}
         switch (feature.properties.Party) {
             case 'REPUBLICAN':  opt.fillColor = "#ff0000";return opt;
             case 'DEMOCRATIC':    opt.fillColor = "#0000ff";return opt;
