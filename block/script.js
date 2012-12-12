@@ -3,7 +3,7 @@ var zoom = 8;
 L.FuncLayer = L.TileLayer.extend({getTileUrl: function (tilePoint) {
         this._adjustTilePoint(tilePoint);
 
-		return this._url(L.Util.extend({
+    	return this._url(L.Util.extend({
 			s: this._getSubdomain(tilePoint),
 			z: this._getZoomForUrl(),
 			x: tilePoint.x,

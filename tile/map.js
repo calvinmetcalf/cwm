@@ -2,7 +2,7 @@ var m = new L.Map('map'),
 mapQuestURL = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
 attribution = 'Tiles courtesy MapQuest',
 mQ = new L.TileLayer(mapQuestURL, {attribution: attribution, subdomains: ['1','2','3','4']}),marker;
-
+var marker = new L.Marker()
 m.setView(new L.LatLng(41.914541,-71.592407), 8).addLayer(mQ)
 //http://open.mapquestapi.com/nominatim/v1/search?countrycodes=us&format=json&json_callback=searchResults&q=
 
@@ -23,9 +23,9 @@ function geocode(){
        dataType: 'jsonp',
        jsonp: 'json_callback',
        success: function (data, textStatus) {
-           if(textStatus="success"){
+           if(textStatus=="success"){
           var latlng = new L.LatLng(data[0].lat, data[0].lon);
-         marker = new L.Marker(latlng);
+         marker.setLatLng(latlng);
         // var southWest,northEast,bounds;
          m.addLayer(marker);
          m.setView(latlng,17);

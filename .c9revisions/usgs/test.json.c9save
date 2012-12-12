@@ -1,0 +1,3 @@
+{"ts":1352393212752,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1352393222633,"patch":[[{"diffs":[[1,"{hello:\"sunshine\"}"]],"start1":0,"start2":0,"length1":0,"length2":18}]],"length":18,"saved":false}
+{"ts":1352394702335,"patch":[[{"diffs":[[0,"{"],[1,"\""],[0,"hello"],[1,"\""],[0,":\"su"]],"start1":0,"start2":0,"length1":10,"length2":12}]],"length":20,"saved":false}
