@@ -52,6 +52,9 @@ r.on("moveend",function(){
 
 var mq=L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg",{subdomains:"1234",attribution:'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}).addTo(l);
 var otp = L.tileLayer("http://tiles{s}.ro.lt/all/{z}/{x}/{y}.png",{subdomains:"1234"}).addTo(r);
+var esri = L.tileLayer("http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",{attribution:'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'});
+var lc=L.control.layers({"Map Quest Open" : mq, "ESRI Ortho" : esri});
+lc.addTo(l);
 r.addHash();
         </script>
     </body>
