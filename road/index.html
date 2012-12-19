@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>roads</title>
+        <meta name="description" content="Demo of leaflet">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="leaflet/leaflet.css" />
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="leaflet/leaflet.ie.css" />
+        <![endif]-->
+        <script src="leaflet/leaflet.js"></script>
+        <script src="leaflet-hash.js"></script>
+        <style>
+            html { 
+                height: 100% 
+            }
+            body { 
+                height: 100%; 
+                margin: 0; 
+                padding: 0;
+            }
+            #right{ 
+                height: 100%;
+                width:50%;
+                float:right;
+            }#left{ 
+                height: 100% ;
+                width:50%;
+                float:left;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="left"></div> <div id="right"></div>
+        <script>
+            var l = L.map('left');
+            var r = L.map('right')
+
+l.setView([42.330758,-71.058025], 13);
+
+r.setView([42.330758,-71.058025], 13);
+
+l.on("moveend",function(){
+   r.setView(l.getCenter(),l.getZoom());
+});
+r.on("moveend",function(){
+   l.setView(r.getCenter(),r.getZoom());
+});
+
+var mq=L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpeg",{subdomains:"1234",attribution:'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'}).addTo(l);
+var otp = L.tileLayer("http://tiles{s}.ro.lt/all/{z}/{x}/{y}.png",{subdomains:"1234"}).addTo(r);
+r.addHash();
+        </script>
+    </body>
+</html>
